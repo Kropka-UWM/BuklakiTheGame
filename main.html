@@ -1,4 +1,3 @@
-{% load static thumbnail compress %}
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -8,16 +7,27 @@
   <title>BuklakiTheGame</title>
     <meta name="description" content="BuklakiTheGame - gra na projekt zespolowy UWM.">
     <meta name="keywords" content="Buklaki The Game">
-  <meta name="author" content="Kropka">
+    <meta name="author" content="Kropka">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/custom/custom.css" rel="stylesheet">
 </head>
 <body>
-<footer>
   <div class="container">
     <div class="row">
+      <div class="text-center">
+        <div class="h1 mb-5">BuklakiTheGame</div>
+        <div id="start" class="h3">Start</div>
+        <div id="help" class="h3">Pomoc</div>
+        <div id="settings" class="h3">Ustawienia</div>
+      </div>
     </div>
   </div>
-</footer>
+<script src="static/js/jquery-3.6.0.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
 <script>
+  $(document).ready(() => {
+    console.log('BuklakiTheGame initialized correctly!');
+  })
 </script>
 </body>
 </html>
