@@ -24,11 +24,20 @@
 <script src="static/js/bootstrap.min.js"></script>
 <script>
   let musicPlaying = false;
+  let KEY_CONFIG = {
+    'UP': [38, 87],
+    'DOWN': [40, 83],
+    'LEFT': [37, 65],
+    'RIGHT': [39, 68],
+    'ENTER': [13],
+  }
 
   $(document).ready((e) => {
     console.log('BuklakiTheGame v0.001 initialized correctly!');
+    let getBody = $('body')
+    const ARROW_SPAN = '<span class="arrows"></span>';
 
-    $('body').on('click', (e) => {
+    getBody.on('click', (e) => {
       if(!musicPlaying){
         let audio = new Audio('static/sound/main-ost.mp3');
         audio.play();
@@ -36,12 +45,37 @@
       }
     })
 
-    $('menu').find('h1, h3').each((index, entry) => {
+    $('#menu').find('h1, h3').each((index, entry) => {
       $(entry).find('a').each((index, anotherEntry) => {
-        $(anotherEntry).on('click', (e) => {
-          console.log($(e.currentTarget).data('action'));
+        $(anotherEntry).hover((e) => {
+          $('.arrows').remove();
+          $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
+          $(e.currentTarget).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
+          $(e.currentTarget).addClass('menu-selected');
         })
       })
+    })
+
+    let checkIfPressed = (string, key) => {
+      return KEY_CONFIG[string].includes(key);
+    }
+
+    getBody.keydown((e) => {
+      let getMenuItems = $('#menu').find('h3');
+      let getArrows = $('.arrows');
+      let getIndex = 0;
+      if(!getArrows.length) $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'));
+      else if(getArrows.length) {
+        getMenuItems.each((index, item) => {
+          if($(item).find('.arrows').length) getIndex = index;
+        })
+        if(checkIfPressed('UP', e.keyCode)) getIndex = (getIndex % getMenuItems.length) - 1;
+        else if(checkIfPressed('DOWN', e.keyCode)) getIndex = (getIndex % getMenuItems.length) + 1;
+        getArrows.remove();
+        $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
+      }
+      $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
+      $(getMenuItems[getIndex]).addClass('menu-selected')
     })
   })
 </script>
