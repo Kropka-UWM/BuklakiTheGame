@@ -12,21 +12,37 @@
     <link href="static/custom/custom.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="text-center">
-        <div class="h1 mb-5">BuklakiTheGame</div>
-        <div id="start" class="h3">Start</div>
-        <div id="help" class="h3">Pomoc</div>
-        <div id="settings" class="h3">Ustawienia</div>
-      </div>
+  <div id="main-div">
+    <div id="menu">
+      <h1>BuklakiTheGame</h1>
+      <h3><a href="#" data-action="...">Nowa gra</a></h3>
+      <h3><a href="#" data-action="...">Ranking</a></h3>
+      <h3><a href="#" data-action="...">Opcje</a></h3>
     </div>
   </div>
 <script src="static/js/jquery-3.6.0.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
 <script>
-  $(document).ready(() => {
-    console.log('BuklakiTheGame initialized correctly!');
+  let musicPlaying = false;
+
+  $(document).ready((e) => {
+    console.log('BuklakiTheGame v0.001 initialized correctly!');
+
+    $('body').on('click', (e) => {
+      if(!musicPlaying){
+        let audio = new Audio('static/sound/main-ost.mp3');
+        audio.play();
+        musicPlaying = true;
+      }
+    })
+
+    $('menu').find('h1, h3').each((index, entry) => {
+      $(entry).find('a').each((index, anotherEntry) => {
+        $(anotherEntry).on('click', (e) => {
+          console.log($(e.currentTarget).data('action'));
+        })
+      })
+    })
   })
 </script>
 </body>
