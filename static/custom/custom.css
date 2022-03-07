@@ -4,6 +4,8 @@ body{
 
 #main-div{
     background-image: url('../assets/bg-menu.png');
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100vh;
 }
 
