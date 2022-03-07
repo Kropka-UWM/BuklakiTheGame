@@ -1,3 +1,42 @@
 body{
     background-color: lightyellow;
 }
+
+#main-div{
+    background-image: url('../assets/bg-menu.png');
+    height: 100vh;
+}
+
+#menu{
+    display: inline-block;
+    position: fixed;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    background-image: url('../assets/menu-blank.png');
+    width: 600px;
+    height: 400px;
+    padding: 24px;
+    color: #f2e694;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#menu, h1{
+    font-weight: 900;
+}
+
+#menu h1, #menu h3{
+    margin-bottom: 32px;
+}
+
+#menu a, a:hover, a:visited, a:active{
+    color: inherit;
+    text-decoration: none;
+}
+
+#menu a:hover{
+    color: #e6ce33;
+}
+
