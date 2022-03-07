@@ -8,13 +8,14 @@ body{
 }
 
 #menu{
-    display: inline-block;
     position: fixed;
     left: 50%;
     top: 60%;
     transform: translate(-50%, -50%);
-    background-image: url('../assets/menu-blank.png');
-    background-repeat: no-repeat;
+    border: 8px solid #fee623;
+    border-radius: 32px;
+    box-sizing: border-box;
+    background-color: #45064b;
     width: 600px;
     height: 400px;
     padding: 24px;
