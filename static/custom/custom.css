@@ -12,7 +12,7 @@ body{
     -webkit-animation-duration: 6s;
     animation-name: fade;
     animation-iteration-count: infinite;
-    animation-duration: 2s;
+    animation-duration: 1.5s;
 }
 
 @-webkit-keyframes fade {
