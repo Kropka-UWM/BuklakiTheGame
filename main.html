@@ -26,11 +26,11 @@
       <h1>Opcje</h1>
       <div class="overflow-auto mb-1"><h3><a href="#" data-action="music" data-arrows="no">
         <span class="float-start">Muzyka</span>
-        <span class="float-end">100%</span>
+        <span class="float-end volume">100%</span>
       </a></h3></div>
       <div class="overflow-auto mb-1"><h3><a href="#" data-action="sound" data-arrows="no">
-        <span class="float-start">Dzwiek z gry</span>
-        <span class="float-end">100%</span>
+        <span class="float-start">Dzwieki z gry</span>
+        <span class="float-end volume">100%</span>
       </a></h3></div>
       <h3 class="mt-5"><a href="#" data-action="to-menu">Powrót do menu</a></h3>
     </div>
@@ -116,6 +116,15 @@
     ABOUT.click((e) => {
       ABOUT.addClass('d-none');
       switchMenus('#menu');
+    })
+
+    $('[data-action=music], [data-action=sound]').click((e) => {
+      let curr = $(e.currentTarget).find('.volume');
+      const AUDIO_SWITCHES = [
+        '0%', '25%', '50%', '75%', '100%'
+      ]
+      let getIndex = AUDIO_SWITCHES.indexOf(curr.text());
+      curr.text(AUDIO_SWITCHES[(getIndex+1)%AUDIO_SWITCHES.length])
     })
 
     $('.menu').find('h1, h3').each((index, entry) => {
