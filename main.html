@@ -44,9 +44,11 @@
     </div>
     <div id="about" class="d-none h-100"></div>
   </div>
-<script src="static/js/jquery-3.6.0.min.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/custom/global-utils.js"></script>
+  <script src="static/js/jquery-3.6.0.min.js"></script>
+  <script src="static/js/js.cookie.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="static/custom/global-utils.js"></script>
+  <script src="static/custom/trans-handler.js"></script>
 <script>
   let mainAudio = undefined;
 
@@ -110,9 +112,11 @@
 
     $('[data-action=language]').click((e) => {
       let curr = $(e.currentTarget).find('.lang');
-      const LANGUAGE_SWITCHES = ['Polski', 'English'];
-      let getIndex = LANGUAGE_SWITCHES.indexOf(curr.text());
-      curr.text(LANGUAGE_SWITCHES[(getIndex+1)%LANGUAGE_SWITCHES.length])
+      const LANGUAGES = ['Polski', 'English'];
+      let getIndex = LANGUAGES.indexOf(curr.text());
+      let getLang = LANGUAGES[(getIndex+1)%LANGUAGES.length];
+      curr.text(getLang);
+      switchLang(getLang);
     })
 
     $('.menu').find('h1, h3').each((index, entry) => {
