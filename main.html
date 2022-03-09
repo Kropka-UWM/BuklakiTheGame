@@ -32,6 +32,10 @@
         <span class="float-start">Dzwieki z gry</span>
         <span class="float-end volume">100%</span>
       </a></h3></div>
+      <div class="overflow-auto mb-1"><h3><a href="#" data-action="language" data-arrows="no">
+        <span class="float-start">Język / Language</span>
+        <span class="float-end lang">Polski</span>
+      </a></h3></div>
       <h3 class="mt-5"><a href="#" data-action="to-menu">Powrót do menu</a></h3>
     </div>
     <div id="ranking" class="menu">
@@ -102,6 +106,13 @@
       let getVolume = AUDIO_SWITCHES[(getIndex+1)%AUDIO_SWITCHES.length];
       if(action === 'music' && mainAudio) mainAudio.volume = parseInt(getVolume.replace('%', '')) * 0.01;
       curr.text(getVolume);
+    })
+
+    $('[data-action=language]').click((e) => {
+      let curr = $(e.currentTarget).find('.lang');
+      const LANGUAGE_SWITCHES = ['Polski', 'English'];
+      let getIndex = LANGUAGE_SWITCHES.indexOf(curr.text());
+      curr.text(LANGUAGE_SWITCHES[(getIndex+1)%LANGUAGE_SWITCHES.length])
     })
 
     $('.menu').find('h1, h3').each((index, entry) => {
