@@ -15,7 +15,7 @@
 </head>
 <body>
   <div id="main-div">
-    <div id="bucket-amount"><span></span></div>
+    <div id="basket-amount"><span></span></div>
     <div id="status" class="menu curr-menu">
       <span class="text-start">Oaza</span>
       <div id="phases" class="text-center"></div>
@@ -24,6 +24,10 @@
     <div id="pause" class="menu">
       <h1>Pauza</h1>
       <h3><a href="#" data-action="play-game">Wróć do gry</a></h3>
+      <h3>
+        <span><a href="#" data-action="solve-and-finish">Rozwiąż i zakończ</a></span>
+        <div class="warning-sign">UWAGA! Wykluczenie z rankingu dla tej gry.</div>
+      </h3>
       <h3>
         <span><a href="#" data-action="back-to-menu">Przejdź do menu</a></span>
         <div class="warning-sign">UWAGA! Utrata postępu.</div>
@@ -37,7 +41,6 @@
   <script src="static/custom/trans-handler.js"></script>
 <script>
   const PHASE_SPAN = '<div class="phase"></div>';
-  const BUCKET_AMOUNT = 5;
 
   let generateSpans = (number) => {
     $('.phase').remove();
@@ -49,7 +52,14 @@
   $(document).ready(() => {
     LOGGER.success('BuklakiTheGame v0.001 initialized correctly!');
     LOGGER.info('CURRENT STAGE: GAME');
-    generateSpans(7);
+
+    let days = 8;
+    if(Cookies.get('distance')) days = Cookies.get('distance');
+    generateSpans(days);
+
+    let basketAmount = 5;
+    if(Cookies.get('distance')) basketAmount = Cookies.get('basket');
+    $('#basket-amount').find('span').text(basketAmount);
 
     let musicPlaying = false;
     let getBody = $('body');

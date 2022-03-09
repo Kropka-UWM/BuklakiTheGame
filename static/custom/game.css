@@ -36,7 +36,7 @@
     box-sizing: border-box;
 }
 
-#bucket-amount{
+#basket-amount{
     margin: 0 auto;
     background-image: url('../assets/buklak.png');
     height: 100px;
@@ -47,13 +47,13 @@
     color: white;
 }
 
-#bucket-amount span{
+#basket-amount span{
     background-color: #2f2700;
 }
 
 #pause{
     width: 480px;
-    height: 320px;
+    height: 360px;
     top: 50%;
 }
 
