@@ -31,3 +31,21 @@ body{
 .curr-menu{
     display: block;
 }
+
+.menu a, a:hover, a:visited, a:active{
+    color: inherit;
+    text-decoration: none;
+}
+
+.menu, h1{
+    font-weight: 900;
+}
+
+.menu h1, .menu h3{
+    margin-bottom: 32px;
+}
+
+.menu .arrows, .menu .menu-selected,
+.menu .menu-selected span{
+    color: #e6ce33 !important;
+}
