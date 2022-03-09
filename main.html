@@ -127,14 +127,13 @@
       let target = $(e.currentTarget);
       let amountSel = `.${target.data('action')}-set`;
       let value = parseInt($(amountSel).text());
-      let newValue = (value + 1) % 21 || 1;
+      let newValue = (value + 1) % 11 || 1;
       $(amountSel).text(newValue);
       Cookies.set(target.data('action'), newValue);
     })
 
     $('[data-action=language]').click((e) => {
       let curr = $(e.currentTarget).find('.lang');
-      const LANGUAGES = ['Polski', 'English'];
       let getIndex = LANGUAGES.indexOf(curr.text());
       let getLang = LANGUAGES[(getIndex+1)%LANGUAGES.length];
       curr.text(getLang);
