@@ -1,5 +1,15 @@
 #main-div{
-    background-image: url('../assets/sandplanet.png');
+    background-image: url('../assets/pustynia_ph_1.png');
+}
+
+@-webkit-keyframes fade {
+    0% {background-image: url('../assets/pustynia_ph_1.png')}
+    50% {background-image: url('../assets/pustynia_ph_2.png')}
+}
+
+@keyframes fade {
+    0% {background-image: url('../assets/pustynia_ph_1.png')}
+    50% {background-image: url('../assets/pustynia_ph_2.png')}
 }
 
 #status, #pause{
