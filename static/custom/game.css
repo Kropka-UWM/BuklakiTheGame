@@ -25,3 +25,15 @@
     border-bottom: 4px #f2e694 solid;
     box-sizing: border-box;
 }
+
+#bucket-amount{
+    text-align: center;
+    padding-top: 40px;
+    padding-left: 48px;
+    font-size: 24px;
+    color: white;
+}
+
+#bucket-amount span{
+    background-color: #2f2700;
+}

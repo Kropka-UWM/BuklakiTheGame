@@ -14,6 +14,7 @@
 </head>
 <body>
   <div id="main-div">
+    <div id="bucket-amount"><span>0</span></div>
     <div id="status" class="menu">
       <span class="text-start">OAZA</span>
       <div id="phases" class="text-center"></div>
@@ -43,6 +44,20 @@
     console.log('BuklakiTheGame v0.001 initialized correctly!');
     console.log('CURRENT STAGE: GAME');
     generateSpans(7);
+
+    let musicPlaying = false;
+    let getBody = $('body');
+    getBody.on('click', (e) => {
+      if (!musicPlaying) {
+        let audio = new Audio('static/sound/main-ost.mp3');
+        audio.play();
+        audio.addEventListener('ended', function () {
+          this.currentTime = 0;
+          this.play();
+        }, false);
+        musicPlaying = true;
+      }
+    });
   })
 </script>
 </body>
