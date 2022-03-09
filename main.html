@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BuklakiTheGame</title>
+  <title>BuklakiTheGame - menu</title>
     <meta name="description" content="BuklakiTheGame - gra na projekt zespolowy UWM.">
     <meta name="keywords" content="Buklaki The Game">
     <meta name="author" content="Kropka">
@@ -13,12 +13,18 @@
 </head>
 <body>
   <div id="main-div">
-    <div id="menu">
+    <div id="menu" class="menu curr-menu">
       <h1>Buklaki The Game</h1>
-      <h3><a href="#" data-action="...">Nowa gra</a></h3>
-      <h3><a href="#" data-action="...">Ranking</a></h3>
-      <h3><a href="#" data-action="...">Opcje</a></h3>
-      <h3><a href="#" data-action="...">O grze</a></h3>
+      <h3><a href="#" data-action="new-game">Nowa gra</a></h3>
+      <h3><a href="#" data-action="settings">Opcje</a></h3>
+      <h3><a href="#" data-action="ranking">Ranking</a></h3>
+      <h3><a href="#" data-action="about">O grze</a></h3>
+    </div>
+    <div id="options" class="menu">
+      <h1>Opcje</h1>
+      <h3><a href="#" data-action="music">Muzyka</a></h3>
+      <h3><a href="#" data-action="sound">Dzwiek z gry</a></h3>
+      <h3><a href="#" data-action="to-menu">Powrót do menu</a></h3>
     </div>
   </div>
 <script src="static/js/jquery-3.6.0.min.js"></script>
@@ -31,6 +37,23 @@
     'LEFT': [37, 65],
     'RIGHT': [39, 68],
     'ENTER': [13],
+  }
+
+  let checkIfPressed = (string, key) => {
+    return KEY_CONFIG[string].includes(key);
+  }
+
+  let getMenuPropertyIndex = () => {
+    let getMenuItems = $('.curr-menu').find('h3');
+    let getIndex = 0;
+    getMenuItems.each((index, item) => {
+      if($(item).find('.arrows').length) getIndex = index;
+    })
+    return getIndex;
+  }
+
+  let getCurrMenu = () => {
+    return $('.curr-menu');
   }
 
   $(document).ready((e) => {
@@ -50,7 +73,33 @@
       }
     })
 
-    $('#menu').find('h1, h3').each((index, entry) => {
+    const handleChoiceSelect = () => {
+      const menu = $('#menu');
+      const options = $('#options');
+      let menuItem = $(getCurrMenu().find('h3')[getMenuPropertyIndex()]);
+      let action = menuItem.find('a').data('action');
+      switch (action){
+        case 'new-game':
+          window.location.href = 'game.html';
+        break;
+        case 'settings':
+          menu.removeClass('curr-menu');
+          options.addClass('curr-menu');
+        break;
+        case 'ranking':
+          console.log('hi');
+        break;
+        case 'about':
+          console.log('hi');
+        break;
+        case 'to-menu':
+          options.removeClass('curr-menu');
+          menu.addClass('curr-menu');
+        break;
+      }
+    }
+
+    $('.menu').find('h1, h3').each((index, entry) => {
       $(entry).find('a').each((index, anotherEntry) => {
         $(anotherEntry).hover((e) => {
           $('.arrows').remove();
@@ -58,29 +107,30 @@
           $(e.currentTarget).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
           $(e.currentTarget).addClass('menu-selected');
         })
+        $(anotherEntry).click((e) => {
+          handleChoiceSelect();
+        })
       })
     })
 
-    let checkIfPressed = (string, key) => {
-      return KEY_CONFIG[string].includes(key);
-    }
-
     getBody.keydown((e) => {
       let getMenuItems = $('#menu').find('h3');
-      let getArrows = $('.arrows');
-      let getIndex = 0;
-      if(!getArrows.length) $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'));
-      else if(getArrows.length) {
-        getMenuItems.each((index, item) => {
-          if($(item).find('.arrows').length) getIndex = index;
-        })
-        if(checkIfPressed('UP', e.keyCode)) getIndex = (getIndex % getMenuItems.length) - 1;
-        else if(checkIfPressed('DOWN', e.keyCode)) getIndex = (getIndex % getMenuItems.length) + 1;
-        getArrows.remove();
-        $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
+      if(checkIfPressed('ENTER', e.keyCode)){
+        handleChoiceSelect();
+      } else {
+        let getArrows = $('.arrows');
+        let getIndex = 0;
+        if(!getArrows.length) $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'));
+        else if(getArrows.length) {
+          getIndex = getMenuPropertyIndex();
+          if(checkIfPressed('UP', e.keyCode)) getIndex = (getIndex % getMenuItems.length) - 1;
+          else if(checkIfPressed('DOWN', e.keyCode)) getIndex = (getIndex % getMenuItems.length) + 1;
+          getArrows.remove();
+          $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
+        }
+        $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
+        $(getMenuItems[getIndex]).addClass('menu-selected');
       }
-      $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
-      $(getMenuItems[getIndex]).addClass('menu-selected')
     })
   })
 </script>

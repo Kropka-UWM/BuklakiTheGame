@@ -26,8 +26,9 @@ body{
     50% {background-image: url('../assets/oaza_2.png')}
 }
 
-#menu{
+.menu{
     position: fixed;
+    display: none;
     left: 50%;
     top: 60%;
     transform: translate(-50%, -50%);
@@ -44,20 +45,24 @@ body{
     text-transform: uppercase;
 }
 
-#menu, h1{
+.curr-menu{
+    display: block;
+}
+
+.menu, h1{
     font-weight: 900;
 }
 
-#menu h1, #menu h3{
+.menu h1, .menu h3{
     margin-bottom: 32px;
 }
 
-#menu a, a:hover, a:visited, a:active{
+.menu a, a:hover, a:visited, a:active{
     color: inherit;
     text-decoration: none;
 }
 
-#menu .arrows, #menu .menu-selected{
+.menu .arrows, .menu .menu-selected{
     color: #e6ce33 !important;
 }
 
