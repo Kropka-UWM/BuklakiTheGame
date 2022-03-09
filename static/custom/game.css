@@ -1,0 +1,24 @@
+#main-div{
+    background-image: url('../assets/sandplanet.png');
+}
+
+#status{
+    left: 50%;
+    bottom: -10%;
+    transform: translate(-50%, -50%);
+    width: 1200px;
+    height: 300px;
+    padding: 24px;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 228px;
+}
+
+.phase{
+    display: inline-block;
+    width: 48px;
+    margin-left: 8px;
+    margin-right: 8px;
+    color: #f2e694;
+    border-bottom: 8px #f2e694 solid;
+}

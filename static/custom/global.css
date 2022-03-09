@@ -1,0 +1,28 @@
+body{
+    background-color: lightyellow;
+}
+
+#main-div{
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    -webkit-animation-name: fade;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 1s;
+    animation-name: fade;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+    animation-timing-function: step-end;
+}
+
+.menu{
+    position: fixed;
+    border: 8px solid #fee623;
+    border-radius: 32px;
+    box-sizing: border-box;
+    background-color: #45064b;
+    color: #f2e694;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}

@@ -1,19 +1,5 @@
-body{
-    background-color: lightyellow;
-}
-
 #main-div{
     background-image: url('../assets/oaza_1.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    -webkit-animation-name: fade;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-duration: 1s;
-    animation-name: fade;
-    animation-iteration-count: infinite;
-    animation-duration: 1s;
-    animation-timing-function: step-end;
 }
 
 @-webkit-keyframes fade {
@@ -27,22 +13,13 @@ body{
 }
 
 .menu{
-    position: fixed;
     display: none;
     left: 50%;
     top: 60%;
     transform: translate(-50%, -50%);
-    border: 8px solid #fee623;
-    border-radius: 32px;
-    box-sizing: border-box;
-    background-color: #45064b;
     width: 600px;
     height: 400px;
     padding: 24px;
-    color: #f2e694;
-    text-align: center;
-    font-weight: bold;
-    text-transform: uppercase;
 }
 
 .curr-menu{
