@@ -43,3 +43,16 @@
     color: #e6ce33 !important;
 }
 
+#ranking{
+    width: 900px;
+    height: 600px;
+}
+
+#about{
+    background: url('../assets/about.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: 9999;
+}
