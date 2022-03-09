@@ -23,7 +23,7 @@
 <script src="static/js/jquery-3.6.0.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
 <script>
-  const PHASE_SPAN = '<div class="phase">1</div>';
+  const PHASE_SPAN = '<div class="phase"></div>';
   let KEY_CONFIG = {
     'UP': [38, 87],
     'DOWN': [40, 83],
@@ -35,7 +35,7 @@
   let generateSpans = (number) => {
     $('.phase').remove();
     for(let step=0; step<number; step++){
-      $('#phases').append($(PHASE_SPAN).attr('data-step', step))
+      $('#phases').append($(PHASE_SPAN).attr('data-step', step).text(step))
     }
   }
 
