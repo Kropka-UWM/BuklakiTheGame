@@ -16,14 +16,21 @@
   <div id="main-div">
     <div id="status" class="menu">
       <span class="text-start">OAZA</span>
-      <span id="phases" class="text-center"></span>
+      <div id="phases" class="text-center"></div>
       <span class="text-end">CEL</span>
     </div>
   </div>
 <script src="static/js/jquery-3.6.0.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
 <script>
-  const PHASE_SPAN = '<div class="phase"></div>';
+  const PHASE_SPAN = '<div class="phase">1</div>';
+  let KEY_CONFIG = {
+    'UP': [38, 87],
+    'DOWN': [40, 83],
+    'LEFT': [37, 65],
+    'RIGHT': [39, 68],
+    'ENTER': [13],
+  }
 
   let generateSpans = (number) => {
     $('.phase').remove();
