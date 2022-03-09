@@ -36,7 +36,7 @@
   let generateSpans = (number) => {
     $('.phase').remove();
     for(let step=1; step<=number; step++){
-      $('#phases').append($(PHASE_SPAN).attr('data-step', step).text(step))
+      $('#phases').append($(PHASE_SPAN).attr('data-step', step))
     }
   }
 

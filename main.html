@@ -23,9 +23,18 @@
     </div>
     <div id="options" class="menu">
       <h1>Opcje</h1>
-      <h3><a href="#" data-action="music">Muzyka</a></h3>
-      <h3><a href="#" data-action="sound">Dzwiek z gry</a></h3>
-      <h3><a href="#" data-action="to-menu">Powrót do menu</a></h3>
+      <div class="overflow-auto mb-1"><h3><a href="#" data-action="music" data-arrows="no">
+        <span class="float-start">Muzyka</span>
+        <span class="float-end">100%</span>
+      </a></h3></div>
+      <div class="overflow-auto mb-1"><h3><a href="#" data-action="sound" data-arrows="no">
+        <span class="float-start">Dzwiek z gry</span>
+        <span class="float-end">100%</span>
+      </a></h3></div>
+      <h3 class="mt-5"><a href="#" data-action="to-menu">Powrót do menu</a></h3>
+    </div>
+    <div id="ranking" class="menu">
+
     </div>
   </div>
 <script src="static/js/jquery-3.6.0.min.js"></script>
@@ -57,6 +66,18 @@
     return $('.curr-menu');
   }
 
+  let switchMenus = (selectorName) => {
+    const menus = [
+      $('#menu'),
+      $('#options'),
+      $('#ranking'),
+    ];
+    menus.forEach((item) => {
+      item.removeClass('curr-menu');
+    })
+    $(selectorName).addClass('curr-menu');
+  }
+
   $(document).ready((e) => {
     console.log('BuklakiTheGame v0.001 initialized correctly!');
     console.log('CURRENT STAGE: MENU');
@@ -76,8 +97,6 @@
     })
 
     const handleChoiceSelect = () => {
-      const menu = $('#menu');
-      const options = $('#options');
       let menuItem = $(getCurrMenu().find('h3')[getMenuPropertyIndex()]);
       let action = menuItem.find('a').data('action');
       switch (action){
@@ -85,8 +104,7 @@
           window.location.href = 'game.html';
         break;
         case 'settings':
-          menu.removeClass('curr-menu');
-          options.addClass('curr-menu');
+          switchMenus('#options');
         break;
         case 'ranking':
           console.log('hi');
@@ -95,8 +113,7 @@
           console.log('hi');
         break;
         case 'to-menu':
-          options.removeClass('curr-menu');
-          menu.addClass('curr-menu');
+          switchMenus('#menu');
         break;
       }
     }
@@ -104,10 +121,13 @@
     $('.menu').find('h1, h3').each((index, entry) => {
       $(entry).find('a').each((index, anotherEntry) => {
         $(anotherEntry).hover((e) => {
+          const currEntry = $(e.currentTarget);
           $('.arrows').remove();
           $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
-          $(e.currentTarget).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
-          $(e.currentTarget).addClass('menu-selected');
+          if(currEntry.data('arrows') !== 'no'){
+            currEntry.prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
+          }
+          currEntry.addClass('menu-selected');
         })
         $(anotherEntry).click((e) => {
           handleChoiceSelect();
