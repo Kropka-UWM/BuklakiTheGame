@@ -19,3 +19,14 @@ const LOGGER = {
         console.log(`%c ${msg}`, 'color: aquamarine;');
     }
 }
+
+let checkIfPressed = (string, key) => {
+    return KEY_CONFIG[string].includes(key);
+}
+
+let switchMenus = (selectorName) => {
+    $('.menu').each((index, item) => {
+        $(item).removeClass('curr-menu');
+    })
+    if(selectorName !== undefined) $(selectorName).addClass('curr-menu');
+}

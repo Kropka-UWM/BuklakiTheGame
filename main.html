@@ -44,11 +44,7 @@
 <script src="static/js/bootstrap.min.js"></script>
 <script src="static/custom/global-utils.js"></script>
 <script>
-  let musicPlaying = false;
-
-  let checkIfPressed = (string, key) => {
-    return KEY_CONFIG[string].includes(key);
-  }
+  let mainAudio = undefined;
 
   let getMenuPropertyIndex = () => {
     let getMenuItems = $('.curr-menu').find('h3');
@@ -59,18 +55,6 @@
     return getIndex;
   }
 
-  let switchMenus = (selectorName) => {
-    const menus = [
-      $('#menu'),
-      $('#options'),
-      $('#ranking'),
-    ];
-    menus.forEach((item) => {
-      item.removeClass('curr-menu');
-    })
-    if(selectorName !== undefined) $(selectorName).addClass('curr-menu');
-  }
-
   $(document).ready((e) => {
     LOGGER.success('BuklakiTheGame v0.001 initialized correctly!');
     LOGGER.info('CURRENT STAGE: MENU');
@@ -79,14 +63,13 @@
     const ABOUT = $('#about');
 
     getBody.on('click', (e) => {
-      if(!musicPlaying){
-        let audio = new Audio('static/sound/main-ost.mp3');
-        audio.play();
-        audio.addEventListener('ended', function() {
+      if(!mainAudio){
+        mainAudio = new Audio('static/sound/main-ost.mp3');
+        mainAudio.play();
+        mainAudio.addEventListener('ended', function() {
             this.currentTime = 0;
             this.play();
         }, false);
-        musicPlaying = true;
       }
     })
 
@@ -119,12 +102,16 @@
     })
 
     $('[data-action=music], [data-action=sound]').click((e) => {
-      let curr = $(e.currentTarget).find('.volume');
+      let target = $(e.currentTarget);
+      let action = $(target).data('action');
+      let curr = $(target).find('.volume');
       const AUDIO_SWITCHES = [
         '0%', '25%', '50%', '75%', '100%'
       ]
       let getIndex = AUDIO_SWITCHES.indexOf(curr.text());
-      curr.text(AUDIO_SWITCHES[(getIndex+1)%AUDIO_SWITCHES.length])
+      let getVolume = AUDIO_SWITCHES[(getIndex+1)%AUDIO_SWITCHES.length];
+      if(action === 'music' && mainAudio) mainAudio.volume = parseInt(getVolume.replace('%', '')) * 0.01;
+      curr.text(getVolume);
     })
 
     $('.menu').find('h1, h3').each((index, entry) => {
@@ -145,19 +132,30 @@
     })
 
     getBody.keydown((e) => {
-      let getMenuItems = $('#menu').find('h3');
-      if(checkIfPressed('ENTER', e.keyCode)){
+      let getMenuItems = $('.curr-menu').find('h3');
+      if(!ABOUT.hasClass('d-none')){
+        ABOUT.addClass('d-none');
+        switchMenus('#menu');
+      }
+      else if(checkIfPressed('ENTER', e.keyCode)){
         handleChoiceSelect();
       } else {
         let getArrows = $('.arrows');
         let getIndex = 0;
-        if(!getArrows.length) $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'));
-        else if(getArrows.length) {
+        if(!getArrows.length){
+          let curr = $(getMenuItems[getIndex]);
+          if(curr.find('a').data('arrows') !== 'no') {
+            curr.prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'));
+          }
+          curr.addClass('menu-selected');
+        } else if(getArrows.length){
           getIndex = getMenuPropertyIndex();
           if(checkIfPressed('UP', e.keyCode)) getIndex = (getIndex % getMenuItems.length) - 1;
           else if(checkIfPressed('DOWN', e.keyCode)) getIndex = (getIndex % getMenuItems.length) + 1;
           getArrows.remove();
-          $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
+          let curr = $(getMenuItems[getIndex]);
+          if(curr.find('a').data('arrows') !== 'no')
+            $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
         }
         $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
         $(getMenuItems[getIndex]).addClass('menu-selected');

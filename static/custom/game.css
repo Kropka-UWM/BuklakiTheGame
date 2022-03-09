@@ -2,7 +2,7 @@
     background-image: url('../assets/sandplanet.png');
 }
 
-#status{
+#status, #pause{
     left: 50%;
     bottom: -10%;
     transform: translate(-50%, -50%);
@@ -39,4 +39,15 @@
 
 #bucket-amount span{
     background-color: #2f2700;
+}
+
+#pause{
+    width: 480px;
+    height: 480px;
+    top: 50%;
+}
+
+.warning-sign{
+    color: lightcoral;
+    font-size: 14px;
 }
