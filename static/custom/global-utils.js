@@ -30,3 +30,12 @@ let switchMenus = (selectorName) => {
     })
     if(selectorName !== undefined) $(selectorName).addClass('curr-menu');
 }
+
+let getMenuPropertyIndex = () => {
+    let getMenuItems = $('.curr-menu').find('h3');
+    let getIndex = 0;
+    getMenuItems.each((index, item) => {
+      if($(item).find('a').hasClass('menu-selected')) getIndex = index;
+    })
+    return getIndex;
+  }

@@ -23,11 +23,11 @@
     </div>
     <div id="pause" class="menu">
       <h1>Pauza</h1>
+      <h3><a href="#" data-action="play-game" data-arrows="no">Wróć do gry</a></h3>
       <h3>
-        <span>Przejdź do menu</span>
+        <span><a href="#" data-action="back-to-menu" data-arrows="no">Przejdź do menu</a></span>
         <div class="warning-sign">UWAGA! Utrata postępu.</div>
        </h3>
-      <h3>Wróć do gry</h3>
     </div>
   </div>
 <script src="static/js/jquery-3.6.0.min.js"></script>
@@ -61,6 +61,36 @@
         musicPlaying = true;
       }
     });
+
+    const handleChoiceSelect = () => {
+      let menuItem = $(jqueryGet('.curr-menu').find('h3')[getMenuPropertyIndex()]);
+      let action = menuItem.find('a').data('action');
+      switch (action){
+        case 'play-game':
+          switchMenus('#status');
+        break;
+        case 'back-to-menu':
+          window.location.href = 'main.html';
+        break;
+      }
+    }
+
+    $('.menu').find('h1, h3').each((index, entry) => {
+      $(entry).find('a').each((index, anotherEntry) => {
+        $(anotherEntry).hover((e) => {
+          const currEntry = $(e.currentTarget);
+          $('.arrows').remove();
+          $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
+          if(currEntry.data('arrows') !== 'no'){
+            currEntry.prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
+          }
+          currEntry.addClass('menu-selected');
+        })
+        $(anotherEntry).click((e) => {
+          handleChoiceSelect();
+        })
+      })
+    })
 
     getBody.keydown((e) => {
       if(checkIfPressed('ESC', e.keyCode)){
