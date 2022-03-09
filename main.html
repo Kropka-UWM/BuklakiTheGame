@@ -11,6 +11,7 @@
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <link href="static/custom/global.css" rel="stylesheet">
     <link href="static/custom/menu.css" rel="stylesheet">
+    <link rel="shortcut icon" href="#">
 </head>
 <body>
   <div id="main-div">
@@ -34,20 +35,16 @@
       <h3 class="mt-5"><a href="#" data-action="to-menu">Powrót do menu</a></h3>
     </div>
     <div id="ranking" class="menu">
-
+      <h1>Ranking</h1>
+      <h3 class="mt-5"><a href="#" data-action="to-menu">Powrót do menu</a></h3>
     </div>
+    <div id="about" class="d-none h-100"></div>
   </div>
 <script src="static/js/jquery-3.6.0.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
+<script src="static/custom/global-utils.js"></script>
 <script>
   let musicPlaying = false;
-  let KEY_CONFIG = {
-    'UP': [38, 87],
-    'DOWN': [40, 83],
-    'LEFT': [37, 65],
-    'RIGHT': [39, 68],
-    'ENTER': [13],
-  }
 
   let checkIfPressed = (string, key) => {
     return KEY_CONFIG[string].includes(key);
@@ -62,10 +59,6 @@
     return getIndex;
   }
 
-  let getCurrMenu = () => {
-    return $('.curr-menu');
-  }
-
   let switchMenus = (selectorName) => {
     const menus = [
       $('#menu'),
@@ -75,14 +68,15 @@
     menus.forEach((item) => {
       item.removeClass('curr-menu');
     })
-    $(selectorName).addClass('curr-menu');
+    if(selectorName !== undefined) $(selectorName).addClass('curr-menu');
   }
 
   $(document).ready((e) => {
-    console.log('BuklakiTheGame v0.001 initialized correctly!');
-    console.log('CURRENT STAGE: MENU');
+    LOGGER.success('BuklakiTheGame v0.001 initialized correctly!');
+    LOGGER.info('CURRENT STAGE: MENU');
     let getBody = $('body')
     const ARROW_SPAN = '<span class="arrows"></span>';
+    const ABOUT = $('#about');
 
     getBody.on('click', (e) => {
       if(!musicPlaying){
@@ -97,7 +91,7 @@
     })
 
     const handleChoiceSelect = () => {
-      let menuItem = $(getCurrMenu().find('h3')[getMenuPropertyIndex()]);
+      let menuItem = $(jqueryGet('.curr-menu').find('h3')[getMenuPropertyIndex()]);
       let action = menuItem.find('a').data('action');
       switch (action){
         case 'new-game':
@@ -107,16 +101,22 @@
           switchMenus('#options');
         break;
         case 'ranking':
-          console.log('hi');
+          switchMenus('#ranking');
         break;
         case 'about':
-          console.log('hi');
+          ABOUT.removeClass('d-none');
+          switchMenus(undefined);
         break;
         case 'to-menu':
           switchMenus('#menu');
         break;
       }
     }
+
+    ABOUT.click((e) => {
+      ABOUT.addClass('d-none');
+      switchMenus('#menu');
+    })
 
     $('.menu').find('h1, h3').each((index, entry) => {
       $(entry).find('a').each((index, anotherEntry) => {
