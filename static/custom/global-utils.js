@@ -6,6 +6,7 @@ let KEY_CONFIG = {
     'ENTER': [13],
     'ESC': [27],
 }
+const ARROW_SPAN = '<span class="arrows"></span>';
 
 let jqueryGet = (selector) => {
     return $(selector);
