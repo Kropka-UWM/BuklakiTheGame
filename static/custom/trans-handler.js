@@ -23,6 +23,8 @@ const TRANS_OBJECT = {
         'Oaza',
         'Cel',
         'Pauza',
+        'Ilość bukłaków',
+        'Dystans',
     ],
     'English': [
         'New game',
@@ -39,6 +41,8 @@ const TRANS_OBJECT = {
         'Oasis',
         'Target',
         'Pause',
+        'Basket amount',
+        'Distance',
     ],
 }
 
