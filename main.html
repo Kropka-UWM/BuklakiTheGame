@@ -46,15 +46,6 @@
 <script>
   let mainAudio = undefined;
 
-  let getMenuPropertyIndex = () => {
-    let getMenuItems = $('.curr-menu').find('h3');
-    let getIndex = 0;
-    getMenuItems.each((index, item) => {
-      if($(item).find('.arrows').length) getIndex = index;
-    })
-    return getIndex;
-  }
-
   $(document).ready((e) => {
     LOGGER.success('BuklakiTheGame v0.001 initialized correctly!');
     LOGGER.info('CURRENT STAGE: MENU');
