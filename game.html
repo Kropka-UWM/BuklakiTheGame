@@ -16,10 +16,18 @@
 <body>
   <div id="main-div">
     <div id="bucket-amount"><span>0</span></div>
-    <div id="status" class="menu">
+    <div id="status" class="menu curr-menu">
       <span class="text-start">OAZA</span>
       <div id="phases" class="text-center"></div>
       <span class="text-end">CEL</span>
+    </div>
+    <div id="pause" class="menu">
+      <h1>Pauza</h1>
+      <h3>
+        <span>Przejdź do menu</span>
+        <div class="warning-sign">UWAGA! Utrata postępu.</div>
+       </h3>
+      <h3>Wróć do gry</h3>
     </div>
   </div>
 <script src="static/js/jquery-3.6.0.min.js"></script>
@@ -52,10 +60,14 @@
         }, false);
         musicPlaying = true;
       }
+    });
 
-      getBody.keydown((e) => {
-        console.log(e.keyCode);
-      });
+    getBody.keydown((e) => {
+      if(checkIfPressed('ESC', e.keyCode)){
+        if(!$('#pause').hasClass('curr-menu'))
+          switchMenus('#pause');
+        else switchMenus('#status');
+      }
     });
   })
 </script>

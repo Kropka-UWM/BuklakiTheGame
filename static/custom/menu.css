@@ -13,17 +13,12 @@
 }
 
 .menu{
-    display: none;
     left: 50%;
     top: 60%;
     transform: translate(-50%, -50%);
     width: 600px;
     height: 400px;
     padding: 24px;
-}
-
-.curr-menu{
-    display: block;
 }
 
 .menu, h1{
@@ -39,7 +34,8 @@
     text-decoration: none;
 }
 
-.menu .arrows, .menu .menu-selected{
+.menu .arrows, .menu .menu-selected,
+.menu .menu-selected span{
     color: #e6ce33 !important;
 }
 
