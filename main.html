@@ -24,6 +24,14 @@
     </div>
     <div id="options" class="menu">
       <h1>Opcje</h1>
+      <div class="overflow-auto mb-1"><h3><a href="#" data-action="basket" data-arrows="no">
+        <span class="float-start">Ilość bukłaków</span>
+        <span class="float-end basket-set">5</span>
+      </a></h3></div>
+      <div class="overflow-auto mb-1"><h3><a href="#" data-action="distance" data-arrows="no">
+        <span class="float-start">Dystans</span>
+        <span class="float-end distance-set">8</span>
+      </a></h3></div>
       <div class="overflow-auto mb-1"><h3><a href="#" data-action="music" data-arrows="no">
         <span class="float-start">Muzyka</span>
         <span class="float-end volume">100%</span>
@@ -108,6 +116,20 @@
       let getVolume = AUDIO_SWITCHES[(getIndex+1)%AUDIO_SWITCHES.length];
       if(action === 'music' && mainAudio) mainAudio.volume = parseInt(getVolume.replace('%', '')) * 0.01;
       curr.text(getVolume);
+    })
+
+    const baseSettings = ['basket', 'distance']
+    baseSettings.forEach((item) => {
+      if(Cookies.get(item)) $(`.${item}-set`).text(Cookies.get(item));
+    })
+
+    $('[data-action=basket], [data-action=distance]').click((e) => {
+      let target = $(e.currentTarget);
+      let amountSel = `.${target.data('action')}-set`;
+      let value = parseInt($(amountSel).text());
+      let newValue = (value + 1) % 21 || 1;
+      $(amountSel).text(newValue);
+      Cookies.set(target.data('action'), newValue);
     })
 
     $('[data-action=language]').click((e) => {

@@ -15,7 +15,7 @@
 </head>
 <body>
   <div id="main-div">
-    <div id="bucket-amount"><span>0</span></div>
+    <div id="bucket-amount"><span></span></div>
     <div id="status" class="menu curr-menu">
       <span class="text-start">Oaza</span>
       <div id="phases" class="text-center"></div>
@@ -37,6 +37,7 @@
   <script src="static/custom/trans-handler.js"></script>
 <script>
   const PHASE_SPAN = '<div class="phase"></div>';
+  const BUCKET_AMOUNT = 5;
 
   let generateSpans = (number) => {
     $('.phase').remove();
