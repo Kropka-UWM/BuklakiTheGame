@@ -26,7 +26,8 @@ const TRANS_OBJECT = {
         'Ilość bukłaków',
         'Dystans',
         'Rozwiąż i zakończ',
-        'UWAGA! Wykluczenie z rankingu dla tej gry.'
+        'UWAGA! Wykluczenie z rankingu dla tej gry.',
+        'Instrukcja',
     ],
     'English': [
         'New game',
@@ -46,7 +47,8 @@ const TRANS_OBJECT = {
         'Basket amount',
         'Distance',
         'Solve and finish',
-        'WARNING! Exclude from ranks for this game.'
+        'WARNING! Exclude from ranks for this game.',
+        'Instruction'
     ],
 }
 
