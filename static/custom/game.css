@@ -54,6 +54,8 @@
 
 .bottom{
     height: 56px;
+    color: white;
+    font-size: 32px;
 }
 
 #basket-amount{
