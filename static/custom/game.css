@@ -23,17 +23,37 @@
     font-size: 48px;
 }
 
+#status span{
+    vertical-align: 56px;
+}
+
 #phases, .phase{
     display: inline-block;
-    max-height: 56px;
+    min-height: 120px;
 }
 
 .phase{
+    width: 80px;
+    margin-top: 64px;
+}
+
+.top, .bottom{
+    display: inline-block;
     width: 64px;
+    height: 64px;
     color: #e6ce33;
-    margin: 96px 8px 0;
+    margin-left: 8px;
+    margin-right: 8px;
+    float: left;
+}
+
+.top{
     border-bottom: 4px #f2e694 solid;
     box-sizing: border-box;
+}
+
+.bottom{
+    height: 56px;
 }
 
 #basket-amount{
