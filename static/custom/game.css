@@ -16,8 +16,8 @@
     left: 50%;
     bottom: -10%;
     transform: translate(-50%, -50%);
-    width: 1200px;
-    height: 300px;
+    width: 80vw;
+    height: 32vh;
     padding: 24px;
     font-weight: 900;
     font-size: 48px;
@@ -96,4 +96,34 @@
 
 #pause, #success{
     top: 50%;
+}
+
+@media only screen and (max-width: 1600px) {
+    #status, #pause, #gameover, #success{
+        font-size: 32px;
+    }
+
+    .phase{
+        width: 56px;
+    }
+
+    .top, .bottom{
+        width: 48px;
+        height: 64px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #status, #pause, #gameover, #success{
+        font-size: 24px;
+    }
+
+    .phase{
+        width: 48px;
+    }
+
+    .top, .bottom{
+        width: 48px;
+        height: 64px;
+    }
 }
