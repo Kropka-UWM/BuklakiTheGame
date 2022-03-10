@@ -26,6 +26,8 @@ let checkIfPressed = (string, key) => {
 }
 
 let switchMenus = (selectorName) => {
+    $('.arrows').remove();
+    $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
     $('.menu').each((index, item) => {
         $(item).removeClass('curr-menu');
     })
