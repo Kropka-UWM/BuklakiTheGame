@@ -9,3 +9,7 @@ class Record(models.Model):
 
     def __str__(self):
         return f'Record {self.id}'
+
+    class Meta:
+        verbose_name = 'Record'
+        verbose_name_plural = 'Records'
