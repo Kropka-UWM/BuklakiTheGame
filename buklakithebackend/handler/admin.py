@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from buklakithebackend.handler.models import Record
+from .models import Record
 
 
 @admin.register(Record)
