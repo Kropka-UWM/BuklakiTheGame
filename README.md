@@ -6,3 +6,14 @@
 * Dawid Zagórski
 * Krzysztof Wysocki
 * Przemysław Samsel
+
+# Testing electron build
+* npm start
+
+# Bundling for desktop
+* npm i -D electron@latest
+* electron-builder build
+
+# Bundling for android [to be continued...]
+* npm install androidjs
+* npm install -g androidjs-builder
