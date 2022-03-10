@@ -165,9 +165,7 @@
       } else if(checkIfPressed('UP', e.keyCode)){
         let step = $(`[data-step=${currPhase}]`);
         let getHiddenBasketVal = parseInt(step.find('.bottom').text());
-        console.log('1');
-        if(getHiddenBasketVal && getHiddenBasketVal > 0){
-          console.log('2');
+        if(getHiddenBasketVal && getHiddenBasketVal > 0 && getWaterAmount() < basketAmount) {
           step.find('.bottom').text(getHiddenBasketVal-1);
           waterAmount += 1;
           setWaterAmount(waterAmount)
