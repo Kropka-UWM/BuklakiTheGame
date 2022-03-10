@@ -43,9 +43,24 @@
     height: 480px;
 }
 
+@media only screen and (max-width: 1000px) {
+    #ranking{
+        width: 720px;
+    }
+}
+
+@media only screen and (max-width: 840px) {
+    #ranking{
+        width: 640px;
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .menu{
         width: 520px;
+    }
+    #ranking{
+        width: 560px;
     }
 }
 
@@ -53,10 +68,16 @@
     .menu{
         width: 440px;
     }
+    #ranking{
+        width: 480px;
+    }
 }
 
 @media only screen and (max-width: 480px) {
     .menu{
         width: 320px;
+    }
+    #ranking{
+        width: 420px;
     }
 }
