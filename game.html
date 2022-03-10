@@ -169,7 +169,8 @@
           $(getMenuItems[getIndex]).find('a').addClass('menu-selected');
         }
       }
-      if(!getWaterAmount() && currPhase > 0) switchMenus('#gameover');
+      let getGameover = $('#gameover');
+      if(!getWaterAmount() && currPhase > 0 && !getGameover.hasClass('curr-menu')) switchMenus('#gameover');
       else if(!currPhase) setWaterAmount(initialBasketAmount);
     });
   })
