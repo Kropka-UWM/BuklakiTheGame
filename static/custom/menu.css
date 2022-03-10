@@ -42,3 +42,21 @@
 #options{
     height: 480px;
 }
+
+@media only screen and (max-width: 768px) {
+    .menu{
+        width: 520px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .menu{
+        width: 440px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .menu{
+        width: 320px;
+    }
+}
