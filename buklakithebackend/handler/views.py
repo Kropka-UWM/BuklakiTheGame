@@ -2,9 +2,11 @@ from django.http import JsonResponse
 from django.http import Http404
 
 # Create your views here.
+from django.views.decorators.csrf import csrf_exempt
 from .models import Record
 
 
+@csrf_exempt
 def handle_record(request):
     if request.method == 'GET':
         raise Http404
