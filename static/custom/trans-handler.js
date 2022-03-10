@@ -30,6 +30,9 @@ const TRANS_OBJECT = {
         'Instrukcja',
         'Porażka!',
         'Wróć do menu.',
+        'Potwierdź.',
+        'Osiągnąłeś wynik (ilość dni):',
+        'Sukces!',
     ],
     'English': [
         'New game',
@@ -53,6 +56,9 @@ const TRANS_OBJECT = {
         'Instruction',
         'Gameover!',
         'Return to menu.',
+        'Confirm.',
+        'Score (amount of days):',
+        'Success!',
     ],
 }
 
