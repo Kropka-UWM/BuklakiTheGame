@@ -131,7 +131,7 @@
     getBody.keydown((e) => {
       let waterAmount = getWaterAmount();
       let ignoreWindows = ['status', 'success'];
-      let currentMenu = $('.current-menu');
+      let currentMenu = $('.curr-menu');
       if(checkIfPressed('ESC', e.keyCode)){
         if(!$('#pause').hasClass('curr-menu'))
           switchMenus('#pause');
