@@ -202,8 +202,10 @@
       if(currentMenu.attr('id') === 'status'){
         if(!getWaterAmount() && currPhase > 0 && !getGameover.hasClass('curr-menu')) switchMenus('#gameover');
         else if(!currPhase) setWaterAmount(initialBasketAmount);
+        else if(currPhase > distance && currentMenu.attr('id') !== 'gameover') {
+          switchMenus('#success');
+        }
       }
-      else if(currPhase >= distance && currentMenu.attr('id') !== 'gameover') switchMenus('#success');
     });
   })
 </script>
