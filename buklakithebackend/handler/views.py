@@ -1,10 +1,13 @@
 from django.http import JsonResponse
+from django.http import Http404
 
 # Create your views here.
-from buklakithebackend.handler.models import Record
+from .models import Record
 
 
 def handle_record(request):
+    if request.method == 'GET':
+        raise Http404
     try:
         Record.objects.create(
             name=request.POST['name'],
