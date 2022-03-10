@@ -33,6 +33,12 @@
         <div class="warning-sign">UWAGA! Utrata postępu.</div>
        </h3>
     </div>
+    <div id="gameover" class="menu">
+      <h1>Porażka!</h1>
+      <h3>
+        <span><a href="#" data-action="back-to-menu">Wróć do menu.</a></span>
+      </h3>
+    </div>
   </div>
   <script src="static/js/jquery-3.6.0.min.js"></script>
   <script src="static/js/js.cookie.min.js"></script>
@@ -41,12 +47,17 @@
   <script src="static/custom/trans-handler.js"></script>
 <script>
   const PHASE_SPAN = '<div class="phase"></div>';
+  let currPhase = 0;
 
   let generateSpans = (number) => {
     $('.phase').remove();
     for(let step=1; step<=number; step++){
       $('#phases').append($(PHASE_SPAN).attr('data-step', step))
     }
+  }
+
+  let getWaterAmount = () => {
+    return parseInt($('#basket-amount').find('span').text());
   }
 
   $(document).ready(() => {
@@ -58,7 +69,7 @@
     generateSpans(days);
 
     let basketAmount = 5;
-    if(Cookies.get('distance')) basketAmount = Cookies.get('basket');
+    if(Cookies.get('basket')) basketAmount = Cookies.get('basket');
     $('#basket-amount').find('span').text(basketAmount);
 
     let musicPlaying = false;
@@ -106,11 +117,27 @@
     })
 
     getBody.keydown((e) => {
+      let waterAmount = getWaterAmount();
       if(checkIfPressed('ESC', e.keyCode)){
         if(!$('#pause').hasClass('curr-menu'))
           switchMenus('#pause');
         else switchMenus('#status');
+      } else if(checkIfPressed('RIGHT', e.keyCode)){
+        if(waterAmount > 0){
+          waterAmount -= 1;
+          currPhase += 1
+          $('#basket-amount').find('span').text(waterAmount);
+          $(`[data-step=${currPhase}]`).text('^');
+        }
+      } else if(checkIfPressed('LEFT', e.keyCode)){
+        if(waterAmount > 0 && currPhase > 0){
+          waterAmount -= 1;
+          $(`[data-step=${currPhase}]`).text('');
+          currPhase -= 1;
+          $('#basket-amount').find('span').text(waterAmount);
+        }
       }
+      if(!getWaterAmount()) switchMenus('#gameover');
     });
   })
 </script>

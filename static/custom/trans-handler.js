@@ -28,6 +28,8 @@ const TRANS_OBJECT = {
         'Rozwiąż i zakończ',
         'UWAGA! Wykluczenie z rankingu dla tej gry.',
         'Instrukcja',
+        'Porażka!',
+        'Wróć do menu.',
     ],
     'English': [
         'New game',
@@ -48,7 +50,9 @@ const TRANS_OBJECT = {
         'Distance',
         'Solve and finish',
         'WARNING! Exclude from ranks for this game.',
-        'Instruction'
+        'Instruction',
+        'Gameover!',
+        'Return to menu.',
     ],
 }
 
