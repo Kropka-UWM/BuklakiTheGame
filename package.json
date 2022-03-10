@@ -1,0 +1,24 @@
+{
+  "name": "BuklakiTheGame",
+  "version": "1.0.0",
+  "description": "Experience the future",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/Kropka-UWM/BuklakiTheGame",
+  "author": "KropkaTeam",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^17.1.2",
+    "electron-builder": "^22.14.13"
+  },
+  "dependencies": {
+    "androidjs": "^2.0.4"
+  },
+  "build": {
+    "win": {
+      "icon": "icon.ico"
+    }
+  }
+}
