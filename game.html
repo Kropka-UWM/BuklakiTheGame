@@ -141,16 +141,36 @@
           waterAmount -= 1;
           currPhase += 1
           setWaterAmount(waterAmount);
-          $(`[data-step=${currPhase}]`).find('.top').text('^');
-          $(`[data-step=${currPhase}]`).find('.bottom').text('0');
+          let step = $(`[data-step=${currPhase}]`);
+          step.find('.top').text('^');
         }
       } else if(checkIfPressed('LEFT', e.keyCode)){
         if(waterAmount > 0 && currPhase > 0){
           waterAmount -= 1;
-          $(`[data-step=${currPhase}]`).find('.top').text('');
-          $(`[data-step=${currPhase}]`).find('.bottom').text('');
+          let step = $(`[data-step=${currPhase}]`);
+          step.find('.top').text('');
           currPhase -= 1;
           setWaterAmount(waterAmount);
+        }
+      } else if(checkIfPressed('DOWN', e.keyCode)) {
+        if(waterAmount > 1){
+          let step = $(`[data-step=${currPhase}]`);
+          let getHiddenBasketVal = parseInt(step.find('.bottom').text());
+          if(!getHiddenBasketVal) getHiddenBasketVal = 1;
+          else getHiddenBasketVal += 1;
+          step.find('.bottom').text(getHiddenBasketVal);
+          waterAmount -= 1;
+          setWaterAmount(waterAmount);
+        }
+      } else if(checkIfPressed('UP', e.keyCode)){
+        let step = $(`[data-step=${currPhase}]`);
+        let getHiddenBasketVal = parseInt(step.find('.bottom').text());
+        console.log('1');
+        if(getHiddenBasketVal && getHiddenBasketVal > 0){
+          console.log('2');
+          step.find('.bottom').text(getHiddenBasketVal-1);
+          waterAmount += 1;
+          setWaterAmount(waterAmount)
         }
       } else if(currentMenu.attr('id') !== 'status'){
         let getMenuItems = $('.curr-menu').find('h3');
