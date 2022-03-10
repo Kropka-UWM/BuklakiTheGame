@@ -60,6 +60,10 @@
     return parseInt($('#basket-amount').find('span').text());
   }
 
+  let setWaterAmount = (amount) => {
+    return $('#basket-amount').find('span').text(amount);
+  }
+
   $(document).ready(() => {
     LOGGER.success('BuklakiTheGame v0.001 initialized correctly!');
     LOGGER.info('CURRENT STAGE: GAME');
@@ -70,6 +74,7 @@
 
     let basketAmount = 5;
     if(Cookies.get('basket')) basketAmount = Cookies.get('basket');
+    let initialBasketAmount = basketAmount;
     $('#basket-amount').find('span').text(basketAmount);
 
     let musicPlaying = false;
@@ -126,7 +131,7 @@
         if(waterAmount > 0){
           waterAmount -= 1;
           currPhase += 1
-          $('#basket-amount').find('span').text(waterAmount);
+          setWaterAmount(waterAmount);
           $(`[data-step=${currPhase}]`).text('^');
         }
       } else if(checkIfPressed('LEFT', e.keyCode)){
@@ -134,10 +139,11 @@
           waterAmount -= 1;
           $(`[data-step=${currPhase}]`).text('');
           currPhase -= 1;
-          $('#basket-amount').find('span').text(waterAmount);
+          setWaterAmount(waterAmount);
         }
       }
-      if(!getWaterAmount()) switchMenus('#gameover');
+      if(!getWaterAmount() && currPhase > 0) switchMenus('#gameover');
+      else if(!currPhase) setWaterAmount(initialBasketAmount);
     });
   })
 </script>
