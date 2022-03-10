@@ -165,27 +165,27 @@
         switchMenus('#menu');
       }
       else if(checkIfPressed('ENTER', e.keyCode)){
-        handleChoiceSelect();
+        $('.menu-selected').click();
       } else {
-        let getArrows = $('.arrows');
+        let menuSelected = $('.menu-selected');
         let getIndex = 0;
-        if(!getArrows.length){
+        if(!menuSelected.length){
           let curr = $(getMenuItems[getIndex]);
           if(curr.find('a').data('arrows') !== 'no') {
             curr.prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'));
           }
           curr.addClass('menu-selected');
-        } else if(getArrows.length){
+        } else if(menuSelected.length){
           getIndex = getMenuPropertyIndex();
           if(checkIfPressed('UP', e.keyCode)) getIndex = (getIndex % getMenuItems.length) - 1;
           else if(checkIfPressed('DOWN', e.keyCode)) getIndex = (getIndex % getMenuItems.length) + 1;
-          getArrows.remove();
+          $('.arrows').remove();
           let curr = $(getMenuItems[getIndex]);
           if(curr.find('a').data('arrows') !== 'no')
             $(getMenuItems[getIndex]).prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
         }
-        $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
-        $(getMenuItems[getIndex]).addClass('menu-selected');
+        menuSelected.each((index, item) => {$(item).removeClass('menu-selected')})
+        $(getMenuItems[getIndex]).find('a').addClass('menu-selected');
       }
     })
   })
