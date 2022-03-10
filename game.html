@@ -39,6 +39,13 @@
         <span><a href="#" data-action="back-to-menu">Wróć do menu.</a></span>
       </h3>
     </div>
+    <div id="success" class="menu">
+      <h1>Sukces!</h1>
+      <h3>Osiągnąłeś wynik:</h3>
+      <h4><span id="game-score">9999</span></h4>
+      <h3><span><a href="#" data-action="back-to-menu">Potwierdź.</a></span></h3>
+      <h3><span><a href="#" data-action="back-to-menu">Wróć do menu.</a></span></h3>
+    </div>
   </div>
   <script src="static/js/jquery-3.6.0.min.js"></script>
   <script src="static/js/js.cookie.min.js"></script>
@@ -68,9 +75,9 @@
     LOGGER.success('BuklakiTheGame v0.001 initialized correctly!');
     LOGGER.info('CURRENT STAGE: GAME');
 
-    let days = 8;
-    if(Cookies.get('distance')) days = Cookies.get('distance');
-    generateSpans(days);
+    let distance = 8;
+    if(Cookies.get('distance')) distance = Cookies.get('distance');
+    generateSpans(distance);
 
     let basketAmount = 5;
     if(Cookies.get('basket')) basketAmount = Cookies.get('basket');
@@ -123,6 +130,8 @@
 
     getBody.keydown((e) => {
       let waterAmount = getWaterAmount();
+      let ignoreWindows = ['status', 'success'];
+      let currentMenu = $('.current-menu');
       if(checkIfPressed('ESC', e.keyCode)){
         if(!$('#pause').hasClass('curr-menu'))
           switchMenus('#pause');
@@ -141,7 +150,7 @@
           currPhase -= 1;
           setWaterAmount(waterAmount);
         }
-      } else if($('.current-menu').attr('id') !== 'status'){
+      } else if(currentMenu.attr('id') !== 'status'){
         let getMenuItems = $('.curr-menu').find('h3');
         if(checkIfPressed('ENTER', e.keyCode)){
           $('.menu-selected').click();
@@ -170,8 +179,11 @@
         }
       }
       let getGameover = $('#gameover');
-      if(!getWaterAmount() && currPhase > 0 && !getGameover.hasClass('curr-menu')) switchMenus('#gameover');
-      else if(!currPhase) setWaterAmount(initialBasketAmount);
+      if(currentMenu.attr('id') === 'status'){
+        if(!getWaterAmount() && currPhase > 0 && !getGameover.hasClass('curr-menu')) switchMenus('#gameover');
+        else if(!currPhase) setWaterAmount(initialBasketAmount);
+      }
+      else if(currPhase >= distance) switchMenus('#success');
     });
   })
 </script>
