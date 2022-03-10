@@ -53,7 +53,7 @@
   <script src="static/custom/global-utils.js"></script>
   <script src="static/custom/trans-handler.js"></script>
 <script>
-  const PHASE_SPAN = '<div class="phase"></div>';
+  const PHASE_SPAN = '<div class="phase"><span class="top"></span><span class="bottom"></span></div>';
   let currPhase = 0;
 
   let generateSpans = (number) => {
@@ -141,12 +141,14 @@
           waterAmount -= 1;
           currPhase += 1
           setWaterAmount(waterAmount);
-          $(`[data-step=${currPhase}]`).text('^');
+          $(`[data-step=${currPhase}]`).find('.top').text('^');
+          $(`[data-step=${currPhase}]`).find('.bottom').text('0');
         }
       } else if(checkIfPressed('LEFT', e.keyCode)){
         if(waterAmount > 0 && currPhase > 0){
           waterAmount -= 1;
-          $(`[data-step=${currPhase}]`).text('');
+          $(`[data-step=${currPhase}]`).find('.top').text('');
+          $(`[data-step=${currPhase}]`).find('.bottom').text('');
           currPhase -= 1;
           setWaterAmount(waterAmount);
         }
