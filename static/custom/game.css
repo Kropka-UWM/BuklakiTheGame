@@ -12,7 +12,7 @@
     50% {background-image: url('../assets/pustynia_ph_2.png')}
 }
 
-#status, #pause, #gameover{
+#status, #pause, #gameover, #success{
     left: 50%;
     bottom: -10%;
     transform: translate(-50%, -50%);
@@ -54,7 +54,6 @@
 #pause{
     width: 480px;
     height: 320px;
-    top: 50%;
 }
 
 .warning-sign{
@@ -66,4 +65,13 @@
     height: 200px;
     width: 420px;
     bottom: 50%;
+}
+
+#success{
+    height: 400px;
+    width: 600px;
+}
+
+#pause, #success{
+    top: 50%;
 }
