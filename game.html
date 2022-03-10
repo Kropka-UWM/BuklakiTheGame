@@ -23,7 +23,7 @@
     </div>
     <div id="pause" class="menu">
       <h1>Pauza</h1>
-      <h3><a href="#" data-action="play-game">Wróć do gry</a></h3>
+      <h3><span><a href="#" data-action="play-game">Wróć do gry</a></span></h3>
       <h3>
         <span><a href="#" data-action="solve-and-finish">Rozwiąż i zakończ</a></span>
         <div class="warning-sign">UWAGA! Wykluczenie z rankingu dla tej gry.</div>
@@ -140,6 +140,33 @@
           $(`[data-step=${currPhase}]`).text('');
           currPhase -= 1;
           setWaterAmount(waterAmount);
+        }
+      } else if($('.current-menu').attr('id') !== 'status'){
+        let getMenuItems = $('.curr-menu').find('h3');
+        if(checkIfPressed('ENTER', e.keyCode)){
+          $('.menu-selected').click();
+        } else {
+          let menuSelected = $('.menu-selected');
+          let getIndex = 0;
+          if(!menuSelected.length){
+            let curr = $(getMenuItems[getIndex]);
+            if(curr.find('a').data('arrows') !== 'no') {
+              curr.find('a').prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'));
+            }
+            curr.addClass('menu-selected');
+          } else if(menuSelected.length){
+            getIndex = getMenuPropertyIndex();
+            if(checkIfPressed('UP', e.keyCode)) getIndex = (getIndex % getMenuItems.length) - 1;
+            else if(checkIfPressed('DOWN', e.keyCode)) getIndex = (getIndex % getMenuItems.length) + 1;
+            $('.arrows').remove();
+            if(getIndex < 0) getIndex = getMenuItems.length - 1;
+            else if(getIndex > getMenuItems.length - 1) getIndex = 0;
+            let curr = $(getMenuItems[getIndex]);
+            if(curr.find('a').data('arrows') !== 'no')
+              $(getMenuItems[getIndex]).find('a').prepend($(ARROW_SPAN).text('--> ')).append($(ARROW_SPAN).text(' <--'))
+          }
+          menuSelected.each((index, item) => {$(item).removeClass('menu-selected')})
+          $(getMenuItems[getIndex]).find('a').addClass('menu-selected');
         }
       }
       if(!getWaterAmount() && currPhase > 0) switchMenus('#gameover');
