@@ -1,15 +1,15 @@
 #main-div{
-    background-image: url('../assets/pustynia_ph_1.png');
+    background-image: url('../assets/pustynia_char_1.png');
 }
 
 @-webkit-keyframes fade {
-    0% {background-image: url('../assets/pustynia_ph_1.png')}
-    50% {background-image: url('../assets/pustynia_ph_2.png')}
+    0% {background-image: url('../assets/pustynia_char_1.png')}
+    50% {background-image: url('../assets/pustynia_char_2.png')}
 }
 
 @keyframes fade {
-    0% {background-image: url('../assets/pustynia_ph_1.png')}
-    50% {background-image: url('../assets/pustynia_ph_2.png')}
+    0% {background-image: url('../assets/pustynia_char_1.png')}
+    50% {background-image: url('../assets/pustynia_char_2.png')}
 }
 
 #status, #pause, #gameover, #success{
