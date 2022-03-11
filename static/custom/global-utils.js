@@ -18,6 +18,9 @@ const LOGGER = {
     },
     info: (msg) => {
         console.log(`%c ${msg}`, 'color: aquamarine;');
+    },
+    error: (msg) => {
+        console.log(`%c ${msg}`, 'color: red;');
     }
 }
 

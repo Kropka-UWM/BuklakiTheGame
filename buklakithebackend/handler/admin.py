@@ -10,7 +10,9 @@ class RecordAdmin(admin.ModelAdmin):
 
     list_display = [
         'name',
-        'score',
+        'days',
+        'basket_amount',
+        'distance',
     ]
     search_fields = [
         'name',

@@ -50,6 +50,8 @@
     </div>
     <div id="ranking" class="menu">
       <h1>Ranking</h1>
+      <div id="ranking-list">
+      </div>
       <h3 class="mt-5"><a href="#" data-action="to-menu">Powrót do menu</a></h3>
     </div>
     <div id="about" class="d-none h-100"></div>
@@ -79,6 +81,23 @@
       }
     })
 
+    const getScoresFromBackend = () => {
+      $.ajax({
+        url: 'http://localhost:8000/get-records/',
+        type: 'POST',
+        success: (data) => {
+            let rankingList = $('#ranking-list');
+            rankingList.empty();
+            data.forEach((item) => {
+              rankingList.append(`
+                      <h3>Name: ${item['name']} | Distance: ${item['distance']} |
+                      Days: ${item['days']}</h3>
+              `)
+            })
+        },
+      })
+    }
+
     const handleChoiceSelect = () => {
       let menuItem = $(jqueryGet('.curr-menu').find('h3')[getMenuPropertyIndex()]);
       let action = menuItem.find('a').data('action');
@@ -90,6 +109,7 @@
           switchMenus('#options');
         break;
         case 'ranking':
+          getScoresFromBackend();
           switchMenus('#ranking');
         break;
         case 'about':
