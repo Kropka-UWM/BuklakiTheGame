@@ -136,11 +136,8 @@
       let waterAmount = getWaterAmount();
       let ignoreWindows = ['status', 'success'];
       let currentMenu = $('.curr-menu');
-      if(checkIfPressed('ESC', e.keyCode)){
-        if(!$('#pause').hasClass('curr-menu'))
-          switchMenus('#pause');
-        else switchMenus('#status');
-      } else if(checkIfPressed('RIGHT', e.keyCode)){
+      if(currentMenu.attr('id') === 'status'){
+         if(checkIfPressed('RIGHT', e.keyCode)){
         if(waterAmount > 0){
           waterAmount -= 1;
           currPhase += 1
@@ -168,13 +165,22 @@
           waterAmount -= 1;
           setWaterAmount(waterAmount);
         }
-      } else if(checkIfPressed('UP', e.keyCode)){
-        let step = $(`[data-step=${currPhase}]`);
-        let getHiddenBasketVal = parseInt(step.find('.bottom').text());
-        if(getHiddenBasketVal && getHiddenBasketVal > 0 && getWaterAmount() < basketAmount) {
-          step.find('.bottom').text(getHiddenBasketVal-1);
-          waterAmount += 1;
-          setWaterAmount(waterAmount)
+      } else if(checkIfPressed('UP', e.keyCode)) {
+           let step = $(`[data-step=${currPhase}]`);
+           let getHiddenBasketVal = parseInt(step.find('.bottom').text());
+           if (getHiddenBasketVal && getHiddenBasketVal > 0 && getWaterAmount() < basketAmount) {
+             step.find('.bottom').text(getHiddenBasketVal - 1);
+             waterAmount += 1;
+             setWaterAmount(waterAmount)
+           }
+         }
+      }
+      if(checkIfPressed('ESC', e.keyCode)){
+        let excludeIds = ['gameover', 'success']
+        if(!excludeIds.includes(currentMenu.attr('id'))){
+          if(!$('#pause').hasClass('curr-menu'))
+            switchMenus('#pause');
+          else switchMenus('#status');
         }
       } else if(currentMenu.attr('id') !== 'status'){
         let getMenuItems = $('.curr-menu').find('h3');
