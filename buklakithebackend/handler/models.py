@@ -5,7 +5,9 @@ class Record(models.Model):
     """Record model."""
 
     name = models.CharField(max_length=255)
-    score = models.IntegerField()
+    days = models.IntegerField()
+    basket_amount = models.IntegerField()
+    distance = models.IntegerField()
 
     def __str__(self):
         return f'Record {self.id}'

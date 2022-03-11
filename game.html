@@ -46,7 +46,7 @@
       <h1>Sukces!</h1>
       <h3>Osiągnąłeś wynik (ilość dni):</h3>
       <h4><span id="days">9999</span></h4>
-      <h3><span><a href="#" data-action="back-to-menu">Potwierdź.</a></span></h3>
+      <h3><span><a href="#" data-action="confirm">Potwierdź.</a></span></h3>
       <h3><span><a href="#" data-action="back-to-menu">Wróć do menu.</a></span></h3>
     </div>
   </div>
@@ -102,12 +102,42 @@
       }
     });
 
+    const saveScoreToBackend = () => {
+      $.ajax({
+        url: 'http://localhost:8000/handle-record/',
+        type: 'POST',
+        data: {
+          'name': 'ABC',
+          'days': parseInt($('#days').text()),
+          'basket_amount': getWaterAmount(),
+          'distance': distance,
+        },
+        timeout: 1000,
+        async: false,
+        success: (data) => {
+            if(data['is_finished']) {
+              LOGGER.info('Sent score to backend system.')
+              return true;
+            }
+            return false;
+        },
+        fail: (jqXHR, textStatus, errorThrown) => {
+          LOGGER.error('Request got ignored.')
+          return false;
+        },
+      })
+    }
+
     const handleChoiceSelect = () => {
       let menuItem = $(jqueryGet('.curr-menu').find('h3')[getMenuPropertyIndex()]);
       let action = menuItem.find('a').data('action');
       switch (action){
         case 'play-game':
           switchMenus('#status');
+        break;
+        case 'confirm':
+          saveScoreToBackend();
+          window.location.href = 'main.html';
         break;
         case 'back-to-menu':
           window.location.href = 'main.html';
