@@ -138,16 +138,21 @@
       let currentMenu = $('.curr-menu');
       if(currentMenu.attr('id') === 'status'){
          if(checkIfPressed('RIGHT', e.keyCode)){
-        if(waterAmount > 0){
-          waterAmount -= 1;
+        if(waterAmount >= 0){
           currPhase += 1
-          setWaterAmount(waterAmount);
           let step = $(`[data-step=${currPhase}]`);
           step.find('.top').text('X');
           days += 1;
+          if(currPhase <= distance){
+            waterAmount -= 1;
+            setWaterAmount(waterAmount);
+          }
         }
       } else if(checkIfPressed('LEFT', e.keyCode)){
-        if(waterAmount > 0 && currPhase > 0){
+       if(waterAmount === 0){
+         switchMenus('#gameover');
+       }
+        else if(waterAmount >= 0 && currPhase > 0){
           waterAmount -= 1;
           let step = $(`[data-step=${currPhase}]`);
           step.find('.top').text('');
@@ -212,8 +217,10 @@
       }
       let getGameover = $('#gameover');
       if(currentMenu.attr('id') === 'status'){
-        if(!getWaterAmount() && currPhase > 0 && !getGameover.hasClass('curr-menu')) switchMenus('#gameover');
-        else if(!currPhase) setWaterAmount(initialBasketAmount);
+        if(!(getWaterAmount() >= 0) && currPhase < distance && currPhase > 0 && !getGameover.hasClass('curr-menu')){
+          switchMenus('#gameover');
+          setWaterAmount(0);
+        } else if(!currPhase) setWaterAmount(initialBasketAmount);
         else if(currPhase > distance && currentMenu.attr('id') !== 'gameover') {
           $('#days').text(days);
           switchMenus('#success');
