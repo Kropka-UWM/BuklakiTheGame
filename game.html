@@ -143,7 +143,7 @@
           currPhase += 1
           setWaterAmount(waterAmount);
           let step = $(`[data-step=${currPhase}]`);
-          step.find('.top').text('^');
+          step.find('.top').text('X');
           days += 1;
         }
       } else if(checkIfPressed('LEFT', e.keyCode)){
