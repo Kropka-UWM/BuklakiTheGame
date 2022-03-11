@@ -29,7 +29,7 @@
 
 #phases, .phase{
     display: inline-block;
-    min-height: 120px;
+    max-height: 80px;
 }
 
 .phase{
@@ -113,7 +113,7 @@
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 824px) {
     #status, #pause, #gameover, #success{
         font-size: 24px;
     }
@@ -123,7 +123,31 @@
     }
 
     .top, .bottom{
-        width: 48px;
+        width: 40px;
         height: 64px;
     }
+}
+
+@media only screen and (max-width: 768px) {
+    #status, #pause, #gameover, #success{
+        font-size: 24px;
+    }
+
+    .phase{
+        width: 40px;
+    }
+
+    .top, .bottom{
+        width: 32px;
+        height: 64px;
+    }
+}
+
+.flex-center{
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: stretch;
 }
