@@ -87,7 +87,6 @@
         LOGGER.success('BuklakiTheGame v0.001 initialized correctly!');
         LOGGER.info('CURRENT STAGE: MENU');
         let getBody = $('body')
-        const ABOUT = $('#about');
 
         getBody.on('click', (e) => {
             if (!mainAudio) {
@@ -108,10 +107,18 @@
                     let rankingList = $('#ranking-list');
                     rankingList.empty();
                     data.forEach((item) => {
-                        rankingList.append(`
-                      <h3>Name: ${item['name']} | Distance: ${item['distance']} |
-                      Days: ${item['days']}</h3>
-              `)
+                        let lang = Cookies.get('lang');
+                        if(lang === 'English'){
+                            rankingList.append(`
+                              <h3>Name: ${item['name']} | Distance: ${item['distance']} |
+                              Days: ${item['days']}</h3>
+                            `)
+                        } else {
+                            rankingList.append(`
+                              <h3>Nazwa: ${item['name']} | Dystans: ${item['distance']} |
+                              Dni: ${item['days']}</h3>
+                            `)
+                        }
                     })
                 },
             })
