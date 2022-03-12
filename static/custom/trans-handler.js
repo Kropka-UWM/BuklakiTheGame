@@ -31,7 +31,7 @@ const TRANS_OBJECT = {
         'Porażka!',
         'Wróć do menu.',
         'Potwierdź.',
-        'Osiągnąłeś wynik (ilość dni):',
+        'Osiągnąłeś wynik (liczba dni):',
         'Sukces!',
     ],
     'English': [
