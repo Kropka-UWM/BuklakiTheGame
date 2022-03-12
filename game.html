@@ -179,7 +179,7 @@
           }
         }
       } else if(checkIfPressed('LEFT', e.keyCode)){
-       if(waterAmount === 0){
+       if(waterAmount < 0){
          switchMenus('#gameover');
        }
         else if(waterAmount >= 0 && currPhase > 0){
