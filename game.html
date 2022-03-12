@@ -247,7 +247,7 @@
       }
       let getGameover = $('#gameover');
       if(currentMenu.attr('id') === 'status'){
-        if(!(getWaterAmount() >= 0) && currPhase < distance && currPhase > 0 && !getGameover.hasClass('curr-menu')){
+        if(!(getWaterAmount() >= 0) && currPhase <= distance && currPhase > 0 && !getGameover.hasClass('curr-menu')){
           switchMenus('#gameover');
           setWaterAmount(0);
         } else if(!currPhase) setWaterAmount(initialBasketAmount);
