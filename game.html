@@ -104,7 +104,7 @@
 
     const saveScoreToBackend = () => {
       $.ajax({
-        url: 'http://localhost:8000/handle-record/',
+        url: '/buklakithebackend/get-records/handle-record/',
         type: 'POST',
         data: {
           'name': 'ABC',
