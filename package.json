@@ -10,8 +10,8 @@
   "author": "KropkaTeam",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^17.1.2",
-    "electron-builder": "^22.14.13"
+    "electron": "^22.0.3",
+    "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "androidjs": "^2.0.4"
