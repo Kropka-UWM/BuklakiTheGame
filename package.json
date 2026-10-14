@@ -4,21 +4,42 @@
   "description": "Experience the future",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "vendor:sync": "node scripts/sync-vendor.js",
+    "test": "playwright test --project=browser",
+    "test:electron": "playwright test --project=electron",
+    "build": "npm run vendor:sync && electron-builder",
+    "build:dir": "npm run vendor:sync && electron-builder --dir"
   },
   "repository": "https://github.com/Kropka-UWM/BuklakiTheGame",
-  "author": "KropkaTeam",
+  "author": "memegauste <memegauste@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^22.0.3",
-    "electron-builder": "^23.6.0"
+    "@playwright/test": "1.64.0",
+    "electron": "44.7.2",
+    "electron-builder": "26.15.3"
   },
   "dependencies": {
-    "androidjs": "^2.0.4"
+    "bootstrap": "5.3.8",
+    "jquery": "4.0.0",
+    "js-cookie": "3.0.8"
   },
   "build": {
     "win": {
       "icon": "icon.ico"
-    }
+    },
+    "appId": "com.kropkauwm.buklaki",
+    "productName": "BuklakiTheGame",
+    "files": [
+      "main.js",
+      "main.html",
+      "game.html",
+      "static/**/*",
+      "icon.ico",
+      "package.json"
+    ]
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

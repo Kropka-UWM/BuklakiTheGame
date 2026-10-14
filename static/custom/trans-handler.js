@@ -67,7 +67,7 @@ const switchLang = (lang) => {
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7',
         'a', 'span', 'div',
     ]
-    let currLang = Cookies.get('lang');
+    let currLang = GameSettings.get('lang');
     if(firstRun){
         currLang = 'Polski';
         firstRun = false;
@@ -79,14 +79,14 @@ const switchLang = (lang) => {
             getItem.text(TRANS_OBJECT[lang][getIndex]);
         }
     })
-    Cookies.set('lang', lang);
+    GameSettings.set('lang', lang);
 }
 
 $(document).ready((e) => {
-    let lang = Cookies.get('lang');
+    let lang = GameSettings.get('lang');
     if(!lang){
         lang = 'Polski';
-        Cookies.set('lang', lang)
+        GameSettings.set('lang', lang)
     }
     if(lang !== 'Polski') switchLang(lang);
     let getLangElement = $('.lang');

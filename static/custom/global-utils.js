@@ -1,3 +1,20 @@
+// Web Storage also works on the desktop's standard custom origin. Read existing
+// HTTP cookies as a fallback so browser players keep their previous settings.
+const GameSettings = {
+    get: (name) => localStorage.getItem(name) ?? Cookies.get(name),
+    set: (name, value) => {
+        localStorage.setItem(name, String(value));
+        if (['http:', 'https:'].includes(location.protocol)) Cookies.set(name, value, { expires: 365 });
+    },
+};
+
+const BACKEND = {
+    url: (endpoint) => {
+        const base = document.querySelector('meta[name="backend-url"]').content;
+        return new URL(endpoint, base.endsWith('/') ? base : base + '/').href;
+    },
+};
+
 let KEY_CONFIG = {
     'UP': [38, 87],
     'DOWN': [40, 83],

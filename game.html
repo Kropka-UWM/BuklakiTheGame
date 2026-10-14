@@ -7,7 +7,8 @@
   <title>BuklakiTheGame - playing</title>
     <meta name="description" content="BuklakiTheGame - gra na projekt zespolowy UWM.">
     <meta name="keywords" content="Buklaki The Game">
-    <meta name="author" content="Kropka">
+    <meta name="author" content="memegauste">
+    <meta name="backend-url" content="http://127.0.0.1:8000/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="#">
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
@@ -46,11 +47,12 @@
       <h1>Sukces!</h1>
       <h3>Osiągnąłeś wynik (liczba dni):</h3>
       <h4><span id="days">9999</span></h4>
+      <p id="score-error" role="status" style="font-size: 16px"></p>
       <h3><span><a href="#" data-action="confirm">Potwierdź.</a></span></h3>
       <h3><span><a href="#" data-action="back-to-menu">Wróć do menu.</a></span></h3>
     </div>
   </div>
-  <script src="static/js/jquery-3.6.0.min.js"></script>
+  <script src="static/js/jquery.min.js"></script>
   <script src="static/js/js.cookie.min.js"></script>
   <script src="static/js/bootstrap.min.js"></script>
   <script src="static/custom/global-utils.js"></script>
@@ -80,11 +82,11 @@
     LOGGER.info('CURRENT STAGE: GAME');
 
     let distance = 8;
-    if(Cookies.get('distance')) distance = Cookies.get('distance');
+    if(GameSettings.get('distance')) distance = GameSettings.get('distance');
     generateSpans(distance);
 
     let basketAmount = 5;
-    if(Cookies.get('basket')) basketAmount = Cookies.get('basket');
+    if(GameSettings.get('basket')) basketAmount = GameSettings.get('basket');
     let initialBasketAmount = basketAmount;
     $('#basket-amount').find('span').text(basketAmount);
 
@@ -93,18 +95,18 @@
     getBody.on('click', (e) => {
       if (!musicPlaying) {
         let audio = new Audio('static/sound/main-ost.mp3');
-        audio.play();
+        audio.play().catch(() => LOGGER.info('Audio playback is unavailable.'));
         audio.addEventListener('ended', function () {
           this.currentTime = 0;
-          this.play();
+          this.play().catch(() => LOGGER.info('Audio playback is unavailable.'));
         }, false);
         musicPlaying = true;
       }
     });
 
     const saveScoreToBackend = () => {
-      $.ajax({
-        url: '/buklakithebackend/handle-record/',
+      return $.ajax({
+        url: BACKEND.url('handle-record/'),
         type: 'POST',
         data: {
           'name': 'ABC',
@@ -112,32 +114,33 @@
           'basket_amount': getWaterAmount(),
           'distance': distance,
         },
-        timeout: 1000,
-        async: false,
-        success: (data) => {
-            if(data['is_finished']) {
-              LOGGER.info('Sent score to backend system.')
-              return true;
-            }
-            return false;
-        },
-        fail: (jqXHR, textStatus, errorThrown) => {
-          LOGGER.error('Request got ignored.')
-          return false;
-        },
+        timeout: 5000,
       })
     }
 
-    const handleChoiceSelect = () => {
+    let savingScore = false;
+    const handleChoiceSelect = async (selectedAction) => {
       let menuItem = $(jqueryGet('.curr-menu').find('h3')[getMenuPropertyIndex()]);
-      let action = menuItem.find('a').data('action');
+      let action = selectedAction || menuItem.find('a').data('action');
       switch (action){
         case 'play-game':
           switchMenus('#status');
         break;
         case 'confirm':
-          saveScoreToBackend();
-          window.location.href = 'main.html';
+          if (savingScore) return;
+          savingScore = true;
+          $('#score-error').text('');
+          try {
+            const result = await saveScoreToBackend();
+            if (!result.is_finished) throw new Error('Score rejected');
+            window.location.href = 'main.html';
+          } catch {
+            $('#score-error').text(GameSettings.get('lang') === 'English'
+                ? 'Score could not be saved. Try again or return to the menu.'
+                : 'Nie udało się zapisać wyniku. Spróbuj ponownie lub wróć do menu.');
+          } finally {
+            savingScore = false;
+          }
         break;
         case 'back-to-menu':
           window.location.href = 'main.html';
@@ -147,7 +150,7 @@
 
     $('.menu').find('h1, h3').each((index, entry) => {
       $(entry).find('a').each((index, anotherEntry) => {
-        $(anotherEntry).hover((e) => {
+        $(anotherEntry).on('mouseenter', (e) => {
           const currEntry = $(e.currentTarget);
           $('.arrows').remove();
           $('.menu-selected').each((index, item) => {$(item).removeClass('menu-selected')})
@@ -156,13 +159,15 @@
           }
           currEntry.addClass('menu-selected');
         })
-        $(anotherEntry).click((e) => {
-          handleChoiceSelect();
+        $(anotherEntry).on('click', (e) => {
+          e.preventDefault();
+          handleChoiceSelect($(e.currentTarget).data('action'));
         })
       })
     })
 
-    getBody.keydown((e) => {
+    getBody.on('keydown', (e) => {
+      if (Object.values(KEY_CONFIG).some(keys => keys.includes(e.keyCode))) e.preventDefault();
       let waterAmount = getWaterAmount();
       let ignoreWindows = ['status', 'success'];
       let currentMenu = $('.curr-menu');
@@ -220,7 +225,7 @@
       } else if(currentMenu.attr('id') !== 'status'){
         let getMenuItems = $('.curr-menu').find('h3');
         if(checkIfPressed('ENTER', e.keyCode)){
-          $('.menu-selected').click();
+          $('.menu-selected').trigger('click');
         } else {
           let menuSelected = $('.menu-selected');
           let getIndex = 0;

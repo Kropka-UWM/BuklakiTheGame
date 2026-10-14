@@ -7,7 +7,8 @@
     <title>BuklakiTheGame - menu</title>
     <meta name="description" content="BuklakiTheGame - gra na projekt zespolowy UWM.">
     <meta name="keywords" content="Buklaki The Game">
-    <meta name="author" content="Kropka">
+    <meta name="author" content="memegauste">
+    <meta name="backend-url" content="http://127.0.0.1:8000/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <link href="static/custom/global.css" rel="stylesheet">
@@ -75,7 +76,7 @@
         Zakopaną wcześniej wodę można ponownie odkopać za pomocą strzałki w górę lub W
     </div>
 </div>
-<script src="static/js/jquery-3.6.0.min.js"></script>
+<script src="static/js/jquery.min.js"></script>
 <script src="static/js/js.cookie.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
 <script src="static/custom/global-utils.js"></script>
@@ -91,42 +92,42 @@
         getBody.on('click', (e) => {
             if (!mainAudio) {
                 mainAudio = new Audio('static/sound/main-ost.mp3');
-                mainAudio.play();
+                mainAudio.play().catch(() => LOGGER.info('Audio playback is unavailable.'));
                 mainAudio.addEventListener('ended', function () {
                     this.currentTime = 0;
-                    this.play();
+                    this.play().catch(() => LOGGER.info('Audio playback is unavailable.'));
                 }, false);
             }
         })
 
         const getScoresFromBackend = () => {
             $.ajax({
-                url: '/buklakithebackend/get-records/',
-                type: 'POST',
+                url: BACKEND.url('get-records/'),
+                type: 'GET',
+                timeout: 5000,
                 success: (data) => {
                     let rankingList = $('#ranking-list');
                     rankingList.empty();
                     data.forEach((item) => {
-                        let lang = Cookies.get('lang');
+                        let lang = GameSettings.get('lang');
                         if(lang === 'English'){
-                            rankingList.append(`
-                              <h3>Name: ${item['name']} | Distance: ${item['distance']} |
-                              Days: ${item['days']}</h3>
-                            `)
+                            rankingList.append($('<h3>').text(`Name: ${item['name']} | Distance: ${item['distance']} | Days: ${item['days']}`));
                         } else {
-                            rankingList.append(`
-                              <h3>Nazwa: ${item['name']} | Dystans: ${item['distance']} |
-                              Dni: ${item['days']}</h3>
-                            `)
+                            rankingList.append($('<h3>').text(`Nazwa: ${item['name']} | Dystans: ${item['distance']} | Dni: ${item['days']}`));
                         }
                     })
+                },
+                error: () => {
+                    $('#ranking-list').text(GameSettings.get('lang') === 'English'
+                        ? 'Ranking is unavailable. Start the backend and try again.'
+                        : 'Ranking niedostępny. Uruchom backend i spróbuj ponownie.');
                 },
             })
         }
 
-        const handleChoiceSelect = () => {
+        const handleChoiceSelect = (selectedAction) => {
             let menuItem = $(jqueryGet('.curr-menu').find('h3')[getMenuPropertyIndex()]);
-            let action = menuItem.find('a').data('action');
+            let action = selectedAction || menuItem.find('a').data('action');
             switch (action) {
                 case 'new-game':
                     window.location.href = 'game.html';
@@ -150,7 +151,7 @@
             }
         }
 
-        $('[data-action=music], [data-action=sound]').click((e) => {
+        $('[data-action=music], [data-action=sound]').on('click', (e) => {
             let target = $(e.currentTarget);
             let action = $(target).data('action');
             let curr = $(target).find('.volume');
@@ -165,19 +166,19 @@
 
         const baseSettings = ['basket', 'distance']
         baseSettings.forEach((item) => {
-            if (Cookies.get(item)) $(`.${item}-set`).text(Cookies.get(item));
+            if (GameSettings.get(item)) $(`.${item}-set`).text(GameSettings.get(item));
         })
 
-        $('[data-action=basket], [data-action=distance]').click((e) => {
+        $('[data-action=basket], [data-action=distance]').on('click', (e) => {
             let target = $(e.currentTarget);
             let amountSel = `.${target.data('action')}-set`;
             let value = parseInt($(amountSel).text());
             let newValue = (value + 1) % 11 || 1;
             $(amountSel).text(newValue);
-            Cookies.set(target.data('action'), newValue);
+            GameSettings.set(target.data('action'), newValue);
         })
 
-        $('[data-action=language]').click((e) => {
+        $('[data-action=language]').on('click', (e) => {
             let curr = $(e.currentTarget).find('.lang');
             let getIndex = LANGUAGES.indexOf(curr.text());
             let getLang = LANGUAGES[(getIndex + 1) % LANGUAGES.length];
@@ -187,7 +188,7 @@
 
         $('.menu').find('h1, h3').each((index, entry) => {
             $(entry).find('a').each((index, anotherEntry) => {
-                $(anotherEntry).hover((e) => {
+                $(anotherEntry).on('mouseenter', (e) => {
                     const currEntry = $(e.currentTarget);
                     $('.arrows').remove();
                     $('.menu-selected').each((index, item) => {
@@ -198,18 +199,20 @@
                     }
                     currEntry.addClass('menu-selected');
                 })
-                $(anotherEntry).click((e) => {
-                    handleChoiceSelect();
+                $(anotherEntry).on('click', (e) => {
+                    e.preventDefault();
+                    handleChoiceSelect($(e.currentTarget).data('action'));
                 })
             })
         })
 
-        getBody.keydown((e) => {
+        getBody.on('keydown', (e) => {
+      if (Object.values(KEY_CONFIG).some(keys => keys.includes(e.keyCode))) e.preventDefault();
             let getMenuItems = $('.curr-menu').find('h3');
             if ($('#about').hasClass('curr-menu') || $('#instructions').hasClass('curr-menu')) {
                 switchMenus('#menu');
             } else if (checkIfPressed('ENTER', e.keyCode)) {
-                $('.menu-selected').click();
+                $('.menu-selected').trigger('click');
             } else {
                 let menuSelected = $('.menu-selected');
                 let getIndex = 0;

@@ -1,0 +1,35 @@
+name: Tests
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+          cache: pip
+          cache-dependency-path: buklakithebackend/requirements.txt
+      - run: npm ci
+      - run: npm run vendor:sync && git diff --exit-code -- static
+      - run: python -m pip install -r buklakithebackend/requirements.txt
+      - run: python buklakithebackend/manage.py check
+      - run: python buklakithebackend/manage.py makemigrations --check --dry-run
+      - run: python buklakithebackend/manage.py test handler
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - name: Test Electron with the real backend
+        env:
+          PYTHON_BIN: python
+        run: xvfb-run --auto-servernum npm run test:electron
+      - run: npm run build:dir -- --linux --x64
